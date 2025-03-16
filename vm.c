@@ -4,6 +4,7 @@
 #include "common.h"
 #include "vm.h"
 #include "debug.h"
+#include "compiler.h"
 
 VM vm; //global instantation -> bad (no flexibility, poor mem management); will change later
 
@@ -85,9 +86,8 @@ static InterpretResult run() {
     #undef BINARY_OP
 }
 
-InterpretResult interpret(Chunk* chunk){
-    vm.chunk = chunk;
-    vm.ip = vm.chunk->code; //set the ip to the first line of code
-    return run();
+InterpretResult interpret(const char* source){
+    compile(source); 
+    return INTERPRET_OK;
 }
 
